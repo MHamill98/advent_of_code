@@ -10,14 +10,11 @@ public class passportValidator {
         try {
             InputStream is = passportValidator.class.getClassLoader().getResourceAsStream(filename);
             Scanner scan = new Scanner(is);
-            scan.useDelimiter("\r\n\r\n");
-            
+            scan.useDelimiter("\r\n\r\n");            
             while (scan.hasNext()) {
-                String[] line = scan.next().trim().split("\\s");
-                
+                String[] line = scan.next().trim().split("\\s");                
                 passports.add(line);
-            }
-            
+            }           
             scan.close();
             is.close();
         } catch (Exception e) {
@@ -31,14 +28,10 @@ public class passportValidator {
         int validFields = 0;
         for (String req : required) {
             for (String field : passport) {
-                if (field.contains(req)) {
-                    validFields++;
-                }
+                if (field.contains(req)) validFields++;
             }
         }
-        if (validFields == 7) {
-            return true;
-        }
+        if (validFields == 7) return true;
         return false;
     }
 
@@ -57,9 +50,7 @@ public class passportValidator {
             Pattern p = Pattern.compile(reg);
             for (String field : passport) {
                 Matcher m = p.matcher(field);
-                if (m.matches()){
-                    validFields++;
-                }
+                if (m.matches()) validFields ++;
             }
         }
         if (validFields == requiredRegex.length) {
@@ -73,17 +64,9 @@ public class passportValidator {
         int validCount1 = 0;
         int validCount2 = 0;
         for (String[] passport : passports) {
-            if (isValidPart1(passport)) {
-                validCount1++;
-            }
+            if (isValidPart1(passport)) validCount1++;
+            if (isValidPart2(passport)) validCount2++;
         }
-
-        for (String[] passport : passports) {
-            if (isValidPart2(passport)) {
-                validCount2++;
-            }
-        }
-
         System.out.println("Part 1: " + validCount1);
         System.out.println("Part 2: " + validCount2);
     }
