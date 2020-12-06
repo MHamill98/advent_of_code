@@ -12,7 +12,6 @@ public class passportValidator {
             Scanner scan = new Scanner(is);
             scan.useDelimiter("\r\n\r\n");
             
-            int i = 1;
             while (scan.hasNext()) {
                 String[] line = scan.next().trim().split("\\s");
                 
