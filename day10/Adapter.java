@@ -23,7 +23,6 @@ public class Adapter {
         int ones = 0;
         int twos = 0;
         int  threes = 0;
-        ones++;
         for (int i = 0; i < adapters.size() - 1; i++){
             switch (adapters.get(i+1) - adapters.get(i)) {
                 case 1:
@@ -37,16 +36,56 @@ public class Adapter {
                     break;
             }
         }
-        threes++;
-        System.out.println(adapters);
-        System.out.println(ones);
-        System.out.println(twos);
-        System.out.println(threes);
         return ones * threes;
+    }
+
+    private static int paths(ArrayList<Integer> adapters) {
+        int num = 0;
+        switch (adapters.size()) {
+            case 1:
+                num = 1;
+                break;
+            case 2:
+                num = 1;
+                break;
+            case 3:
+                num = 2;
+                break;
+            case 4:
+                num = 4;
+                break;
+            case 5:
+                num = 7;
+                break;
+        }
+        return num;
+    }
+
+    private static long part2(ArrayList<Integer> adapters) {
+        ArrayList<ArrayList<Integer>> sets = new ArrayList<>();
+        ArrayList<Integer> working = new ArrayList<>();
+        for (int i = 0; i < adapters.size() - 1; i++) {
+            working.add(adapters.get(i));
+
+            if(adapters.get(i+1) - adapters.get(i) == 3) {
+                sets.add(working);
+                working = new ArrayList<Integer>();
+            }
+        }
+        long paths = 1;
+        for (ArrayList<Integer> set : sets) {
+            System.out.println(set);
+            System.out.println(paths(set));
+            paths *= paths(set);
+        }
+        return paths;
     }
 
     public static void main(String[] args) {
         ArrayList<Integer> adapters = readData("input.txt");
+        adapters.add(0);
+        adapters.add(159);
         System.out.println(part1(adapters));
+        System.out.println(part2(adapters));
     }
 }
